@@ -16,12 +16,13 @@ Official PyTorch implementation for our works on the topic of **efficiently adap
 [1] ["Tri-Plane Mamba: Efficiently Adapting Segment Anything Model for 3D Medical Images"](https://papers.miccai.org/miccai-2024/paper/2184_paper.pdf) ([MICCAI 2024](https://papers.miccai.org/miccai-2024))
 
 ## 🌊🌊🌊 News
-<li class="item4"><strong>[2024-10-15]</strong>&nbsp Setup this github. </li> 
+
+💧 ***[2024-10-22]*** Re-organize and Upload partial core codes.
 
 ## 🔥🔥🔥 Contributions
 We foucs on proposing more advanced adapters or training algorithms to adapt the pre-trained VFM (both natural and medical-specific models) on 3d medical image segmentation.
 
-🔥 ***Data-Efficient***: Use less data to achieve more competitive performance 
+🔥 ***Data-Efficient***: Use less data to achieve more competitive performance, such as semi-supervised, few-shot, zero-shot and so on.
 
 🔥 ***Parameter-Efficient***: Enhance the representation by lightweight adapters, such as local-feature, global-feature or other existing adapters. 
 
@@ -29,7 +30,16 @@ We foucs on proposing more advanced adapters or training algorithms to adapt the
 🔨 TODO 
 
 ## ⭐⭐⭐ Usage
-💡 TODO
+💡 Supported Adapters
+| Name   | Type   | Supported   |
+|------------|------------|------------|
+| LoRA | pixel-independent | ✔️|
+| SSF | pixel-independent | TODO |
+| multi-scale conv| local | ✔️|
+| PPM| local | TODO |
+| Mamba| global | TODO |
+| Linear Attention| global | TODO |
+
 
 ## 📋 Results and Models
 📌 TODO 
