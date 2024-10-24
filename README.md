@@ -33,6 +33,7 @@ We foucs on proposing more advanced adapters or training algorithms to adapt the
 💡 Supported Adapters
 | Name   | Type   | Supported   |
 |------------|------------|------------|
+| Baseline (Frozen SAM) | None | ✔️|
 | LoRA | pixel-independent | ✔️|
 | SSF | pixel-independent | TODO |
 | multi-scale conv| local | ✔️|
