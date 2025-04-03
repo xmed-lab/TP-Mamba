@@ -6,7 +6,7 @@ import timm
 from timm.layers import resample_abs_pos_embed_nhwc
 
 class SAM_Base(nn.Module):
-    def __init__(self, model_type='samvit_base_patch16.sa1b', num_classes=1):
+    def __init__(self, model_type='samvit_base_patch16.sa1b', num_classes=1, dr=8.0):
         super().__init__()
         droppath = 0.0
         model = timm.create_model(
@@ -27,7 +27,7 @@ class SAM_Base(nn.Module):
         
         #### define the decoder
         self.num_classes = num_classes
-        self.decoder = SAM_Decoder(768, 64, num_classes=num_classes, downsample_rate=16.0)
+        self.decoder = SAM_Decoder(768, 64, num_classes=num_classes, downsample_rate=dr)
         
     def forward_ppn(self, x):
         '''

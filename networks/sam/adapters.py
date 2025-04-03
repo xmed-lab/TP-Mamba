@@ -2,6 +2,7 @@ from .sam_utils import window_partition, window_unpartition, desequence, sequenc
 import torch
 import torch.nn as nn
 import math
+import einops
 
 act_func = nn.GELU()
 act_params = ("gelu")
@@ -15,9 +16,9 @@ class CIR(nn.Sequential):
         )
 
 class Adapter_MSConv(nn.Module):
-    def __init__(self, kernel = 3):
+    def __init__(self, kernel = 3, dim = 768):
         super().__init__()
-        self.dim = 768
+        self.dim = dim
         r = self.dim // 4
         ratio = kernel // 2
         dilation = [1, 2, 4, 8]
@@ -40,11 +41,11 @@ class Adapter_MSConv(nn.Module):
 
     def forward(self, x, b=1, d=96):
         shortcut = x
-        x = sequence(x, b, d)
+        x = einops.rearrange(x, '(b d) h w c -> b c h w d', b=b, d=d)
         x = self.down(x)
         x = torch.cat([self.b1(x), self.b2(x), self.b3(x), self.b4(x)], dim=1)
         x = self.up(x)
-        x = desequence(x)
+        x = einops.rearrange(x, 'b c h w d -> (b d) h w c')
         x = shortcut + x
         return x
 

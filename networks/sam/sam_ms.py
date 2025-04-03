@@ -28,6 +28,9 @@ class SAM_MS(nn.Module):
             if t_layer_i < self.len:
                 model.blocks[t_layer_i].attn.qkv = LoRA(blk.attn.qkv, 64)
                 
+        ##### Begin inserting block-wise adapters, multi-scale convolutional adapter.
+        self.Adapter = nn.Sequential(*[MSConv(kernel=3) for i in range(self.len)]) 
+                
         model.neck = nn.Identity() # remove original decoders 
         self.sam = model
         del model
@@ -54,7 +57,8 @@ class SAM_MS(nn.Module):
     def forward_encoder(self, x):
         res = []
         for i in range(self.len):
-            x = self.sam.blocks[i](x)
+            x = self.sam.blocks[i](x)    ### block with LoRA
+            x = self.Adapter[i](x, self.batch, self.depth) ### MS conv
             if i >= self.begin:
                 res.append(x.permute(0, 3, 1, 2))
         return res
